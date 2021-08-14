@@ -1,6 +1,7 @@
 ﻿using ConnectionDB;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -14,18 +15,33 @@ namespace AduanaGAMA
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            fecha.Text = DateTime.Now.ToString();
+            LoadControlDropDown(rol, EmpleadoDB.ConsultarOpcionEmpleado("CRoles"), "Id", "Nombre");
+            LoadControlDropDown(departamento, EmpleadoDB.ConsultarOpcionEmpleado("CDepa"), "Id", "Nombre");
+            LoadControlDropDown(sexo, EmpleadoDB.ConsultarOpcionEmpleado("CSexo"), "Nombre", "Nombre");
 
-            if (!string.IsNullOrEmpty(Request.QueryString["id"]) && !int.TryParse(Request.QueryString["id"], out int id) && id > 0)
+            int id = 0;
+            if (!string.IsNullOrEmpty(Request.QueryString["id"]) && int.TryParse(Request.QueryString["id"], out id) && id > 0)
             {
+                DataTable empleado = EmpleadoDB.ConsultarOpcionEmpleado("consultar", id);
                 //editar
-                EmpleadoDB.ConsultarOpcionEmpleado("consultar", id);
+                if (empleado.Rows.Count > 0)
+                {
+                    var fila = empleado.Rows[0];
+                    nombre.Text = fila["Nombre"].ToString();
+                    apellido.Text = fila["Apellido"].ToString();
+                    direccion.Text = fila["Direccion"].ToString();
+                    telefono.Text = fila["Telefono"].ToString();
+                    salario.Text = fila["Salario"].ToString();
+                    departamento.SelectedValue = fila["IdDepartamento"].ToString();
+                    rol.SelectedValue = fila["Rol"].ToString();
+                    fecha.Text = fila["FechaIngreso"].ToString();
+                    sexo.SelectedValue = fila["Sexo"].ToString();
+                    codigoCompania.Text = fila["CodigoCompania"].ToString();
+                }
             }
             else
             {
-                LoadControlDropDown(rol, EmpleadoDB.ConsultarOpcionEmpleado("CRoles"), "Id", "Nombre");
-                LoadControlDropDown(departamento, EmpleadoDB.ConsultarOpcionEmpleado("CDepa"), "Id", "Nombre");
-                LoadControlDropDown(sexo, EmpleadoDB.ConsultarOpcionEmpleado("CSexo"), "Nombre", "Nombre");
+                fecha.Text = DateTime.Now.ToString("yyyy-MM-dd");
             }
         }
 
@@ -38,11 +54,21 @@ namespace AduanaGAMA
         }
 
         [WebMethod]
-        public static string Registrar(Entidad.Empleado empleado)
+        public static string Registrar(Entidad.Empleado empleado, string id = "")
         {
+            //NameValueCollection Query = HttpContext.Current.Request.QueryString;
+
             try
             {
-                EmpleadoDB.RegistrarEmpleado("Insertar", empleado);
+                if(!string.IsNullOrEmpty(id) /*&& int.TryParse(Query["id"], out int id) && id > 0*/)
+                {
+                    empleado.Id = id.ToString();
+                    EmpleadoDB.RegistrarEmpleado("Actualizar", empleado);
+                }
+                else
+                {
+                    EmpleadoDB.RegistrarEmpleado("Insertar", empleado);
+                }
 
                 return "ok";
             }
@@ -51,5 +77,7 @@ namespace AduanaGAMA
                 return ex.Message;
             }
         }
+
+        
     }
 }

@@ -5,7 +5,7 @@
 <html>
 <head runat="server">
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <title>Gestion de empleado</title>
     <!-- BOOTSTRAP - BOOTSWATCH THEME - COSMOS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/materia/bootstrap.min.css">

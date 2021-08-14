@@ -47,6 +47,7 @@ namespace ConnectionDB
                     {
                         new SqlParameter("@Activar", activar) {  SqlDbType = SqlDbType.VarChar, Size = 20, Direction = ParameterDirection.Input },
                         new SqlParameter("@nombre", empleado.Nombre) {  SqlDbType = SqlDbType.VarChar, Size = 100, Direction = ParameterDirection.Input },
+                        new SqlParameter("@id", empleado.Id) {  SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                         new SqlParameter("@apellido", empleado.Apellido) {  SqlDbType = SqlDbType.VarChar, Size = 100, Direction = ParameterDirection.Input },
                         new SqlParameter("@direccion", empleado.Direccion) {  SqlDbType = SqlDbType.VarChar, Size = 100, Direction = ParameterDirection.Input },
                         new SqlParameter("@telefono", empleado.Telefono) {  SqlDbType = SqlDbType.VarChar, Size = 100, Direction = ParameterDirection.Input },
@@ -76,6 +77,31 @@ namespace ConnectionDB
             }
 
             return resultado;
+        }
+
+        public static void EliminarEmpleado(string id)
+        {
+            using (SqlConnection connection = new Connection().GetConnection())
+            {
+                using (SqlCommand sqlCommand = new SqlCommand("GestionEmpleado", connection) { CommandType = CommandType.StoredProcedure })
+                {
+                    List<SqlParameter> parametros = new List<SqlParameter>()
+                    {
+                        new SqlParameter("@Activar", "Eliminar") {  SqlDbType = SqlDbType.VarChar, Size = 20, Direction = ParameterDirection.Input },
+                        new SqlParameter("@id", id) {  SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
+                    };
+
+                    sqlCommand.Parameters.AddRange(parametros.ToArray());
+
+                    connection.Open();
+                    using (SqlDataReader reader = sqlCommand.ExecuteReader())
+                    {
+                        reader.Close();
+                        sqlCommand.Dispose();
+                        connection.Close();
+                    }
+                }
+            }
         }
 
         //Metodo generico para el cargue de los datos Rol, Departameto y Sexo y el empleado.

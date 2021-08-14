@@ -23,8 +23,8 @@
                                 <asp:BoundField DataField="Direccion" HeaderText="Direccion" />
                                 <asp:BoundField DataField="Telefono" HeaderText="Telefono" />
                                 <asp:BoundField DataField="Salario" HeaderText="Salario" />
-                                <asp:BoundField DataField="IdDepartamento" HeaderText="IdDepartamento" />
-                                <asp:BoundField DataField="Rol" HeaderText="Rol" />
+                                <asp:BoundField DataField="NombreDepartamento" HeaderText="Departamento" />
+                                <asp:BoundField DataField="NombreRol" HeaderText="Rol" />
                                 <asp:BoundField DataField="FechaIngreso" HeaderText="FechaIngreso" />
                                 <asp:BoundField DataField="Sexo" HeaderText="Sexo" />
                                 <asp:BoundField DataField="CodigoCompania" HeaderText="Código Compañia" />
@@ -37,7 +37,7 @@
                                 </asp:TemplateField>
                                 <asp:TemplateField>
                                     <ItemTemplate>
-                                        <i class="fa fa-trash fa-2x"></i>
+                                        <i class="fa fa-trash fa-2x" onclick="eliminarEmpleado('<%# Eval("Id") %>')"></i>
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>

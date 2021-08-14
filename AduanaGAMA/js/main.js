@@ -3,7 +3,7 @@
 
 ////});
 
-function ValidarCompaos() {
+function ValidarCompos() {
     if ($(nombre).val() === "" || $(apellido).val() === "" || $(direccion).val() === "" || $('#telefono').val() === "" || $(salario).val() === "" ||
         $(departamento).val() === 0 || $(rol).val() === 0 || $('#fecha').val() === "" || $('#sexo').val() === 0 || $('#codigoCompania').val() === "") {
         return false
@@ -13,7 +13,7 @@ function ValidarCompaos() {
 };
 
 function GuardarDatos() {
-    if (ValidarCompaos() === false) {
+    if (!ValidarCompos()) {
         alert("¡Por favor Diligenciar todo los campos!");
     } else {
         GuardarEmpleado();
@@ -29,42 +29,35 @@ function CrearJson() {
         "Salario": $('#salario').val(),
         "Departamento": $('#departamento').val() || '',
         "Rol": $('#rol').val() || '',
-        "Fecha": $('#fecha').val(),
+        "Fecha": $('#fecha').val() || '',
         "Sexo": $('#sexo').val() || '',
-        "CodigoEmpresa": $('#codigoCompania').val()
+        "CodigoEmpresa": $('#codigoCompania').val() || ''
     };
 };
 
 function GuardarEmpleado() {
-    var Parametros = {};
-    Parametros.sTexto = CrearJson();
-    //Parametros.Consulta = "";
-    //var Data = JSON.stringify(Parametros)
+    const id = new URLSearchParams(window.location.search).get('id');
+    let data = CrearJson();
 
-    let response = post({ typeHTTP: 'POST', method: 'Registrar', data: CrearJson() });
+    data = {
+        'empleado': data
+    };
 
-    //$.ajax({
-    //    type: "POST",
-    //    url: "PendientesExterna.aspx/BuscarInformacionCombosPendientes",
-    //    data: JSON.stringify({ sDatosJson: Parametros }),
-    //    contentType: "application/json; charset=utf-8",
-    //    dataType: "json",
-    //    success: function (data) {
-    //        var sResultado = jQuery.parseJSON(data.d);
-    //        if (sResultado.TipoMensaje != 'Error' && sResultado.TipoMensaje != 'NA') {
-    //            json_Data.success(sResultado.Datos);
-    //        } else if (sResultado.TipoMensaje === 'NA') {
-    //            json_Data.success([]);
-    //        } else {
-    //            alert(sResultado.Mensaje);
-    //        }
-    //    },
-    //    error: function (xmlHttpRequest, textStatus, errorThrown) {
-    //        alert(xmlHttpRequest.responseText);
-    //    }
-    //})
+    if (typeof id !== undefined && id !== '') {
+        data.id = id;
+        post({ typeHTTP: 'POST', method: 'Registrar', data: data});
+    } else {
+        post({ typeHTTP: 'POST', method: 'Registrar', data: data});
+    }
 };
 
+function eliminarEmpleado(id) {
+    post({ typeHTTP: 'POST', method: 'Eliminar', data: { 'id': id } });
+
+    console.log();
+}
+
+//function arrow
 const post = ({ typeHTTP, method, data }) => {
     const request = new XMLHttpRequest();
     let respuesta = '';
@@ -74,16 +67,24 @@ const post = ({ typeHTTP, method, data }) => {
         return;
     }
 
-    request.open(typeHTTP, `${window.location.href}/${method}`, true);
+    let pathname = window.location.pathname === '/' ? 'Default.aspx' : window.location.pathname;
+
+    request.open(typeHTTP, `${pathname}/${method}`, true);
     //request.open('POST', 'Default.aspx', true);
 
     request.onreadystatechange = function () {
         if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
-                const response = JSON.parse(request.responseText).d;
-                console.log(response);
+                let responseText = request.responseText;
+                try {
+                    let response = JSON.parse(responseText).d;
+                    console.log(response);
 
-                respuesta = response;
+                    respuesta = response;
+                } catch (ex) {
+                    console.log(ex);
+                    console.log(responseText);
+                }
             }
             else {
                 console.log('problemas con la peticion');
@@ -93,10 +94,6 @@ const post = ({ typeHTTP, method, data }) => {
 
     request.setRequestHeader('Cache-Control', 'no-cache');
     request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
-
-    data = {
-        'empleado': data
-    };
 
     //envia la peticion
     request.send(JSON.stringify(data));
