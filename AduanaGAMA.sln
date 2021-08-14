@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AduanaGAMA", "AduanaGAMA\AduanaGAMA.csproj", "{BF59A636-138B-4607-BEF9-817CCDE224B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectionDB", "ConnectionDB\ConnectionDB.csproj", "{CEE67BCA-CCDC-4450-9EE7-E954531EFAA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entidad", "Entidad\Entidad.csproj", "{63B52D19-1AA2-43F8-81FF-B5903610EBF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{BF59A636-138B-4607-BEF9-817CCDE224B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF59A636-138B-4607-BEF9-817CCDE224B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF59A636-138B-4607-BEF9-817CCDE224B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEE67BCA-CCDC-4450-9EE7-E954531EFAA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEE67BCA-CCDC-4450-9EE7-E954531EFAA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEE67BCA-CCDC-4450-9EE7-E954531EFAA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEE67BCA-CCDC-4450-9EE7-E954531EFAA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63B52D19-1AA2-43F8-81FF-B5903610EBF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63B52D19-1AA2-43F8-81FF-B5903610EBF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63B52D19-1AA2-43F8-81FF-B5903610EBF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63B52D19-1AA2-43F8-81FF-B5903610EBF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

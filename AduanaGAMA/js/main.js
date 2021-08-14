@@ -4,29 +4,12 @@
 ////});
 
 function ValidarCompaos() {
-    if ($(nombre).val() === "" || $(apellido).val() === "" || $(direccion).val() === "" || $(telefono).val() === "" || $(salario).val() === "" ||
-        $(departamento).val() === "Departameto*" || $(rol).val() === "Rol*" || $(fecha).val() === "" || $(sexo).val() === "Sexo*" || $(codigoEmpresa).val() === "") {
+    if ($(nombre).val() === "" || $(apellido).val() === "" || $(direccion).val() === "" || $('#telefono').val() === "" || $(salario).val() === "" ||
+        $(departamento).val() === 0 || $(rol).val() === 0 || $('#fecha').val() === "" || $('#sexo').val() === 0 || $('#codigoCompania').val() === "") {
         return false
     } else {
         return true
     }
-};
-
-const test = () => {
-    $.ajax({
-        type: 'POST',
-        url: "PendientesExterna.aspx/BuscarInformacionCombosPendientes",
-        data: null,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            var response = jQuery.parseJSON(data.d);
-            console.log(response);
-        },
-        error: function (xmlHttpRequest, textStatus, errorThrown) {
-            console.log(xmlHttpRequest.responseText);
-        }
-    })
 };
 
 function GuardarDatos() {
@@ -38,57 +21,60 @@ function GuardarDatos() {
 };
 
 function CrearJson() {
-    var data = {
-        "nombre": $(nombre).val(),
-        "apellido": $(apellido).val(),
-        "direccion": $(direccion).val(),
-        "telefono": $(telefono).val(),
-        "salario": $(salario).val(),
-        "departamento": $(departamento).val(),
-        "rol": $(rol).val(),
-        "fecha": $(fecha).val(),
-        "sexo": $(sexo).val(),
-        "codigoempresa": $(codigoEmpresa).val()
-    }
-    return data
+    return {
+        "Nombre": $('#nombre').val(),
+        "Apellido": $('#apellido').val(),
+        "Direccion": $('#direccion').val(),
+        "Telefono": $('#telefono').val(),
+        "Salario": $('#salario').val(),
+        "Departamento": $('#departamento').val() || '',
+        "Rol": $('#rol').val() || '',
+        "Fecha": $('#fecha').val(),
+        "Sexo": $('#sexo').val() || '',
+        "CodigoEmpresa": $('#codigoCompania').val()
+    };
 };
 
 function GuardarEmpleado() {
     var Parametros = {};
     Parametros.sTexto = CrearJson();
-    Parametros.Consulta = "BuscarAreas";
-    var Data = JSON.stringify(Parametros)
-    $.ajax({
-        type: "POST",
-        url: "PendientesExterna.aspx/BuscarInformacionCombosPendientes",
-        data: JSON.stringify({ sDatosJson: Data }),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            var sResultado = jQuery.parseJSON(data.d);
-            if (sResultado.TipoMensaje != 'Error' && sResultado.TipoMensaje != 'NA') {
-                json_Data.success(sResultado.Datos);
-            } else if (sResultado.TipoMensaje === 'NA') {
-                json_Data.success([]);
-            } else {
-                alert(sResultado.Mensaje);
-            }
-        },
-        error: function (xmlHttpRequest, textStatus, errorThrown) {
-            alert(xmlHttpRequest.responseText);
-        }
-    })
+    //Parametros.Consulta = "";
+    //var Data = JSON.stringify(Parametros)
+
+    let response = post({ typeHTTP: 'POST', method: 'Registrar', data: CrearJson() });
+
+    //$.ajax({
+    //    type: "POST",
+    //    url: "PendientesExterna.aspx/BuscarInformacionCombosPendientes",
+    //    data: JSON.stringify({ sDatosJson: Parametros }),
+    //    contentType: "application/json; charset=utf-8",
+    //    dataType: "json",
+    //    success: function (data) {
+    //        var sResultado = jQuery.parseJSON(data.d);
+    //        if (sResultado.TipoMensaje != 'Error' && sResultado.TipoMensaje != 'NA') {
+    //            json_Data.success(sResultado.Datos);
+    //        } else if (sResultado.TipoMensaje === 'NA') {
+    //            json_Data.success([]);
+    //        } else {
+    //            alert(sResultado.Mensaje);
+    //        }
+    //    },
+    //    error: function (xmlHttpRequest, textStatus, errorThrown) {
+    //        alert(xmlHttpRequest.responseText);
+    //    }
+    //})
 };
 
 const post = ({ typeHTTP, method, data }) => {
     const request = new XMLHttpRequest();
+    let respuesta = '';
 
     if (!request) {
         console.log(new Error('el navegador no soporta XmlHttpRequest'));
         return;
     }
 
-    request.open('POST', `${window.location.href}/RegistrarEmpleado`, true);
+    request.open(typeHTTP, `${window.location.href}/${method}`, true);
     //request.open('POST', 'Default.aspx', true);
 
     request.onreadystatechange = function () {
@@ -96,6 +82,8 @@ const post = ({ typeHTTP, method, data }) => {
             if (request.status === 200) {
                 const response = JSON.parse(request.responseText).d;
                 console.log(response);
+
+                respuesta = response;
             }
             else {
                 console.log('problemas con la peticion');
@@ -106,5 +94,12 @@ const post = ({ typeHTTP, method, data }) => {
     request.setRequestHeader('Cache-Control', 'no-cache');
     request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
 
-    request.send();
+    data = {
+        'empleado': data
+    };
+
+    //envia la peticion
+    request.send(JSON.stringify(data));
+
+    return respuesta;
 };

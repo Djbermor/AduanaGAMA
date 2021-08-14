@@ -41,7 +41,7 @@
                         <asp:TextBox runat="server" ClientIDMode="Static" class="form-control" 
                             id="codigoCompania" placeholder="Codigo Compañia*" />
                     </div>
-                    <button class="btn btn-primary btn-block" onclick="GuardarDatos()">
+                    <button class="btn btn-primary btn-block" onclick="GuardarDatos()" type="button">
                         Signup
                     </button>
                 </div>

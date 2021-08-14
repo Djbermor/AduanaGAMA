@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConnectionDB;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -12,9 +13,7 @@ namespace AduanaGAMA
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //txtEmpleado.Text = "kk";
-
-            gridViewEmpleado.DataSource = new DataTable();
+            gridViewEmpleado.DataSource = EmpleadoDB.ConsultarOpcionEmpleado("Consultar");
             gridViewEmpleado.DataBind();
         }
 

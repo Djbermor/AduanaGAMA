@@ -6,8 +6,5 @@
 }
 
 main {
-    padding-top: 5rem;
-    padding-right: 10rem;
-    padding-left: 10rem;
-    padding-bottom: 5rem;
+    padding: 5rem;
 }
