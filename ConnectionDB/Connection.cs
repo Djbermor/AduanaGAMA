@@ -18,7 +18,7 @@ namespace ConnectionDB
             connection = new SqlConnection(connectionString);
         }
 
-        protected SqlConnection GetConnection()
+        public SqlConnection GetConnection()
         {
             return connection;
         }
