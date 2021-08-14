@@ -53,14 +53,11 @@ function GuardarEmpleado() {
 
 function eliminarEmpleado(id) {
     post({ typeHTTP: 'POST', method: 'Eliminar', data: { 'id': id } });
-
-    console.log();
 }
 
 //function arrow
 const post = ({ typeHTTP, method, data }) => {
     const request = new XMLHttpRequest();
-    let respuesta = '';
 
     if (!request) {
         console.log(new Error('el navegador no soporta XmlHttpRequest'));
@@ -78,12 +75,13 @@ const post = ({ typeHTTP, method, data }) => {
                 let responseText = request.responseText;
                 try {
                     let response = JSON.parse(responseText).d;
-                    console.log(response);
 
-                    respuesta = response;
+                    mensajes(response);
+                    console.log(response);
                 } catch (ex) {
                     console.log(ex);
                     console.log(responseText);
+                    mensajes(response);
                 }
             }
             else {
@@ -97,6 +95,18 @@ const post = ({ typeHTTP, method, data }) => {
 
     //envia la peticion
     request.send(JSON.stringify(data));
-
-    return respuesta;
 };
+
+function mensajes(response) {
+    const redirect = () => window.location.href = 'Default.aspx';
+
+    switch (response) {
+        case 'ok':
+            swal('Acción realizada correctamente', '', "success").then(() => redirect()).catch(() => redirect());
+            break;
+
+        default:
+            swal('Oops', 'Hubo problemas con su petición. por favor intente más tarde.').then(() => redirect()).catch(() => redirect());
+            break;
+    }
+}
