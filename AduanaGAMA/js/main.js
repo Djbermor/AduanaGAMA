@@ -21,6 +21,14 @@ function ValidarComposDepartamento() {
     }
 };
 
+function ValidarComposRol() {
+    if ($(rol).val() === "") {
+        return false
+    } else {
+        return true
+    }
+};
+
 function GuardarDatos() {
     if (!ValidarCompos()) {
         alert("¡Por favor Diligenciar todo los campos!");
@@ -28,11 +36,20 @@ function GuardarDatos() {
         GuardarEmpleado();
     }  
 };
+
 function GuardarDatosDepartamento() {
     if (!ValidarComposDepartamento()) {
         alert("¡Por favor Diligenciar todo los campos!");
     } else {
         GuardarDepartamento();
+    }
+};
+
+function GuardarDatosRol() {
+    if (!ValidarComposRol()) {
+        alert("¡Por favor Diligenciar todo los campos!");
+    } else {
+        GuardarRol();
     }
 };
 
@@ -57,6 +74,12 @@ function CrearJsonDepartamento() {
     };
 };
 
+function CrearJsonRol() {
+    return {
+        "nombre": $('#rol').val()
+    };
+};
+
 function GuardarDepartamento() {
     const id = new URLSearchParams(window.location.search).get('id');
     let data = CrearJsonDepartamento();
@@ -73,6 +96,22 @@ function GuardarDepartamento() {
     }
 };
 
+function GuardarRol() {
+    const id = new URLSearchParams(window.location.search).get('id');
+    let data = CrearJsonRol();
+
+    data = {
+        'rol': data
+    };
+
+    if (typeof id !== undefined && id !== '') {
+        data.id = id;
+        post({ typeHTTP: 'POST', method: 'RegistrarRol', data: data });
+    } else {
+        post({ typeHTTP: 'POST', method: 'RegistrarRol', data: data });
+    }
+};
+
 function GuardarEmpleado() {
     const id = new URLSearchParams(window.location.search).get('id');
     let data = CrearJson();
@@ -86,7 +125,7 @@ function GuardarEmpleado() {
         if (data.empleado.Rol == 1) {
             data.vista = "Jefe";
         }
-        if (data.empleado.Rol == 2) {
+        if (data.empleado.Rol >= 2) {
             data.vista = "";
         }
         post({ typeHTTP: 'POST', method: 'Registrar', data: data});
@@ -102,7 +141,10 @@ function EliminarDepartamento(id) {
 
 function eliminarEmpleado(id) {
     post({ typeHTTP: 'POST', method: 'Eliminar', data: { 'id': id } });
+};
 
+function EliminarRol(id) {
+    post({ typeHTTP: 'POST', method: 'Eliminar', data: { 'id': id } });
 };
 
 //function arrow
@@ -152,6 +194,7 @@ function mensajes(response) {
     const redirect = () => window.location.href = 'Default.aspx';
     const redirectDepar = () => window.location.href = 'GrillaDepartamento.aspx';
     const redirectJefe = () => window.location.href = 'GrillaJefeEncargado.aspx';
+    const redirectRol = () => window.location.href = 'GrillaRol.aspx';
 
     switch (response) {
         case 'ok':
@@ -162,6 +205,9 @@ function mensajes(response) {
             break;
         case 'okJefe':
             swal('Acción realizada correctamente ', '', "success").then(() => redirectJefe()).catch(() => redirectJefe());
+            break;
+        case 'okRol':
+            swal('Acción realizada correctamente ', '', "success").then(() => redirectRol()).catch(() => redirectRol());
             break;
         default:
             swal('Oops', 'Hubo problemas con su petición. por favor intente más tarde.').then(() => redirect()).catch(() => redirect());

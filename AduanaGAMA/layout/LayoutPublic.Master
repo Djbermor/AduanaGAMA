@@ -35,6 +35,9 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="GrillaJefeEncargado.aspx">Consultar Jefe</a>
                         <a class="dropdown-item" href="Empleado.aspx">Agregar Jefe</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="GrillaRol.aspx">Consultar Cargo</a>
+                        <a class="dropdown-item" href="Rol.aspx">Agregar Cargo</a>
                     </div>
                     </li>
                 </ul>

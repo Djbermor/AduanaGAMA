@@ -9,9 +9,9 @@ using Entidad;
 
 namespace ConnectionDB
 {
-    public class DepartamentoDB
+    public class RolDB
     {
-        public static DataTable RegistrarDepartamento(string activar, Departamento departamento)
+        public static DataTable RegistrarRol(string activar, Rol rol)
         {
             DataTable resultado = new DataTable();
 
@@ -22,8 +22,8 @@ namespace ConnectionDB
                     List<SqlParameter> parametros = new List<SqlParameter>()
                     {
                         new SqlParameter("@Activar", activar) {  SqlDbType = SqlDbType.VarChar, Size = 20, Direction = ParameterDirection.Input },
-                        new SqlParameter("@nombre", departamento.Departamento1) {  SqlDbType = SqlDbType.VarChar, Size = 100, Direction = ParameterDirection.Input },
-                        new SqlParameter("@id", departamento.Id) {  SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
+                        new SqlParameter("@nombre", rol.Nombre) {  SqlDbType = SqlDbType.VarChar, Size = 100, Direction = ParameterDirection.Input },
+                        new SqlParameter("@id", rol.Id) {  SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input },
                     };
 
                     sqlCommand.Parameters.AddRange(parametros.ToArray());
@@ -46,7 +46,7 @@ namespace ConnectionDB
             return resultado;
         }
 
-        public static void EliminarDepartamento(string id)
+        public static void EliminarRol(string id)
         {
             using (SqlConnection connection = new Connection().GetConnection())
             {
@@ -54,7 +54,7 @@ namespace ConnectionDB
                 {
                     List<SqlParameter> parametros = new List<SqlParameter>()
                     {
-                        new SqlParameter("@Activar", "EDeparta") {  SqlDbType = SqlDbType.VarChar, Size = 20, Direction = ParameterDirection.Input },
+                        new SqlParameter("@Activar", "ERol") {  SqlDbType = SqlDbType.VarChar, Size = 20, Direction = ParameterDirection.Input },
                         new SqlParameter("@id", id) {  SqlDbType = SqlDbType.Int, Direction = ParameterDirection.Input }
                     };
 
@@ -72,7 +72,7 @@ namespace ConnectionDB
         }
 
         //Metodo generico para el cargue de los datos Rol, Departameto y Sexo y el empleado.
-        public static DataTable ConsultarOpcionDepartamento(string activar, int id = 0)
+        public static DataTable ConsultarOpcionRol(string activar, int id = 0)
         {
             DataTable resultado = new DataTable();
 

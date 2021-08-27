@@ -73,9 +73,11 @@
     <Content Include="Empleado.aspx" />
     <Content Include="GrillaDepartamento.aspx" />
     <Content Include="GrillaJefeEncargado.aspx" />
+    <Content Include="GrillaRol.aspx" />
     <Content Include="js\jQuery-2.1.4.min.js" />
     <Content Include="js\jquery-ui.js" />
     <Content Include="js\main.js" />
+    <Content Include="Rol.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +116,13 @@
     <Compile Include="GrillaJefeEncargado.aspx.designer.cs">
       <DependentUpon>GrillaJefeEncargado.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GrillaRol.aspx.cs">
+      <DependentUpon>GrillaRol.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GrillaRol.aspx.designer.cs">
+      <DependentUpon>GrillaRol.aspx</DependentUpon>
+    </Compile>
     <Compile Include="layout\LayoutPublic.Master.cs">
       <DependentUpon>LayoutPublic.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -122,6 +131,13 @@
       <DependentUpon>LayoutPublic.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rol.aspx.cs">
+      <DependentUpon>Rol.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rol.aspx.designer.cs">
+      <DependentUpon>Rol.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="layout\LayoutPublic.Master" />
