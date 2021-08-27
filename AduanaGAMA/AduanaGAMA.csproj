@@ -69,7 +69,9 @@
   <ItemGroup>
     <Content Include="css\main.css" />
     <Content Include="Default.aspx" />
+    <Content Include="Departamento.aspx" />
     <Content Include="Empleado.aspx" />
+    <Content Include="GrillaDepartamento.aspx" />
     <Content Include="js\jQuery-2.1.4.min.js" />
     <Content Include="js\jquery-ui.js" />
     <Content Include="js\main.js" />
@@ -83,12 +85,26 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Departamento.aspx.cs">
+      <DependentUpon>Departamento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Departamento.aspx.designer.cs">
+      <DependentUpon>Departamento.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Empleado.aspx.cs">
       <DependentUpon>Empleado.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Empleado.aspx.designer.cs">
       <DependentUpon>Empleado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GrillaDepartamento.aspx.cs">
+      <DependentUpon>GrillaDepartamento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GrillaDepartamento.aspx.designer.cs">
+      <DependentUpon>GrillaDepartamento.aspx</DependentUpon>
     </Compile>
     <Compile Include="layout\LayoutPublic.Master.cs">
       <DependentUpon>LayoutPublic.Master</DependentUpon>

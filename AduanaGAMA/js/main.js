@@ -3,9 +3,18 @@
 
 ////});
 
+let vista = 0;
 function ValidarCompos() {
     if ($(nombre).val() === "" || $(apellido).val() === "" || $(direccion).val() === "" || $('#telefono').val() === "" || $(salario).val() === "" ||
         $(departamento).val() === 0 || $(rol).val() === 0 || $('#fecha').val() === "" || $('#sexo').val() === 0 || $('#codigoCompania').val() === "") {
+        return false
+    } else {
+        return true
+    }
+};
+
+function ValidarComposDepartamento() {
+    if ($(departa).val() === "") {
         return false
     } else {
         return true
@@ -18,6 +27,13 @@ function GuardarDatos() {
     } else {
         GuardarEmpleado();
     }  
+};
+function GuardarDatosDepartamento() {
+    if (!ValidarComposDepartamento()) {
+        alert("¡Por favor Diligenciar todo los campos!");
+    } else {
+        GuardarDepartamento();
+    }
 };
 
 function CrearJson() {
@@ -33,6 +49,28 @@ function CrearJson() {
         "Sexo": $('#sexo').val() || '',
         "CodigoEmpresa": $('#codigoCompania').val() || ''
     };
+};
+
+function CrearJsonDepartamento() {
+    return {
+        "departamento1": $('#departa').val()
+    };
+};
+
+function GuardarDepartamento() {
+    const id = new URLSearchParams(window.location.search).get('id');
+    let data = CrearJsonDepartamento();
+    
+    data = {
+        'departamento': data
+    };
+
+    if (typeof id !== undefined && id !== '') {
+        data.id = id;
+        post({ typeHTTP: 'POST', method: 'RegistrarDeparta', data: data });
+    } else {
+        post({ typeHTTP: 'POST', method: 'RegistrarDeparta', data: data });
+    }
 };
 
 function GuardarEmpleado() {
@@ -51,8 +89,13 @@ function GuardarEmpleado() {
     }
 };
 
+function EliminarDepartamento(id) {
+    post({ typeHTTP: 'POST', method: 'Eliminar', data: { 'id': id } });
+}
+
 function eliminarEmpleado(id) {
     post({ typeHTTP: 'POST', method: 'Eliminar', data: { 'id': id } });
+
 }
 
 //function arrow
@@ -98,13 +141,17 @@ const post = ({ typeHTTP, method, data }) => {
 };
 
 function mensajes(response) {
+
     const redirect = () => window.location.href = 'Default.aspx';
+    const redirectDepar = () => window.location.href = 'GrillaDepartamento.aspx';
 
     switch (response) {
         case 'ok':
-            swal('Acción realizada correctamente', '', "success").then(() => redirect()).catch(() => redirect());
+            swal('Acción realizada correctamente ', '', "success").then(() => redirect()).catch(() => redirect());
             break;
-
+        case 'okDepar':
+            swal('Acción realizada correctamente ', '', "success").then(() => redirectDepar()).catch(() => redirectDepar());
+            break;
         default:
             swal('Oops', 'Hubo problemas con su petición. por favor intente más tarde.').then(() => redirect()).catch(() => redirect());
             break;

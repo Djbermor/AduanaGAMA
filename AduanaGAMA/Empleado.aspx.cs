@@ -77,7 +77,5 @@ namespace AduanaGAMA
                 return ex.Message;
             }
         }
-
-        
     }
 }
