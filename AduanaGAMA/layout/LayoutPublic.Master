@@ -6,7 +6,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>Gestion de empleado</title>
+    <title>Aduana Gama</title>
     <!-- BOOTSTRAP - BOOTSWATCH THEME - COSMOS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/materia/bootstrap.min.css">
     <!-- FONT AWESOME -->
@@ -32,6 +32,9 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="GrillaDepartamento.aspx">Consultar Departamento</a>
                         <a class="dropdown-item" href="Departamento.aspx">Agregar Departamento</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="GrillaJefeEncargado.aspx">Consultar Jefe</a>
+                        <a class="dropdown-item" href="Empleado.aspx">Agregar Jefe</a>
                     </div>
                     </li>
                 </ul>

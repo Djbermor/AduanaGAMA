@@ -54,7 +54,7 @@ namespace AduanaGAMA
         }
 
         [WebMethod]
-        public static string Registrar(Entidad.Empleado empleado, string id = "")
+        public static string Registrar(Entidad.Empleado empleado, string id = "", string vista = "")
         {
             //NameValueCollection Query = HttpContext.Current.Request.QueryString;
 
@@ -70,7 +70,13 @@ namespace AduanaGAMA
                     EmpleadoDB.RegistrarEmpleado("Insertar", empleado);
                 }
 
-                return "ok";
+                if (vista == "Jefe") {
+                    return "okJefe";
+                }
+                else {
+                    return "ok";
+                }
+                
             }
             catch (Exception ex)
             {

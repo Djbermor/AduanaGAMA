@@ -83,20 +83,27 @@ function GuardarEmpleado() {
 
     if (typeof id !== undefined && id !== '') {
         data.id = id;
+        if (data.empleado.Rol == 1) {
+            data.vista = "Jefe";
+        }
+        if (data.empleado.Rol == 2) {
+            data.vista = "";
+        }
         post({ typeHTTP: 'POST', method: 'Registrar', data: data});
     } else {
         post({ typeHTTP: 'POST', method: 'Registrar', data: data});
     }
 };
 
+
 function EliminarDepartamento(id) {
     post({ typeHTTP: 'POST', method: 'Eliminar', data: { 'id': id } });
-}
+};
 
 function eliminarEmpleado(id) {
     post({ typeHTTP: 'POST', method: 'Eliminar', data: { 'id': id } });
 
-}
+};
 
 //function arrow
 const post = ({ typeHTTP, method, data }) => {
@@ -144,6 +151,7 @@ function mensajes(response) {
 
     const redirect = () => window.location.href = 'Default.aspx';
     const redirectDepar = () => window.location.href = 'GrillaDepartamento.aspx';
+    const redirectJefe = () => window.location.href = 'GrillaJefeEncargado.aspx';
 
     switch (response) {
         case 'ok':
@@ -151,6 +159,9 @@ function mensajes(response) {
             break;
         case 'okDepar':
             swal('Acción realizada correctamente ', '', "success").then(() => redirectDepar()).catch(() => redirectDepar());
+            break;
+        case 'okJefe':
+            swal('Acción realizada correctamente ', '', "success").then(() => redirectJefe()).catch(() => redirectJefe());
             break;
         default:
             swal('Oops', 'Hubo problemas con su petición. por favor intente más tarde.').then(() => redirect()).catch(() => redirect());
