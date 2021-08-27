@@ -48,6 +48,8 @@ SELECT * FROM Rol
 GO
 SELECT * FROM Departamento
 GO 
+SELECT * FROM Empleado
+delete Empleado where Id=14
 --CREATE PROCEDURE GestionEmpleado
 --@Activar NVARCHAR(20),
 --@nombre NVARCHAR(100),

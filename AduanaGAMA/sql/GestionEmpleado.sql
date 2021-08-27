@@ -48,6 +48,7 @@ BEGIN
 		FROM Empleado
 			inner join Rol on Rol.Id = Empleado.Rol
 			inner join Departamento on Departamento.Id = Empleado.IdDepartamento
+			where  Rol >=2
 	end
 	else
 	begin
@@ -93,6 +94,136 @@ BEGIN
 	return
 END
 
+-------------------------------------
+-- Query Deprtamento
+-------------------------------------
+IF @Activar = 'CDeparta'
+BEGIN
+	if IsNull(@id, 0) = 0 
+	begin
+		SELECT Id, nombre as Nombre
+		FROM Departamento
+	end
+	else
+	begin
+		SELECT Id, nombre as Nombre
+		FROM Departamento
+		where Departamento.Id = @id
+	end
+
+	return
+END
+
+IF @Activar = 'ADeparta'
+BEGIN
+	UPDATE Departamento 
+		SET Nombre=@nombre
+	WHERE Id=@id
+
+	select @id as Id
+	return
+END
+
+IF @Activar = 'IDeparta'
+BEGIN
+	INSERT INTO  Departamento(Nombre)
+	VALUES (@nombre)
+
+	--retorna el id de la ultima insercion
+	select SCOPE_IDENTITY() as Id
+	return
+END
+
+IF @Activar = 'EDeparta'
+BEGIN
+	DELETE FROM Departamento WHERE Id=@id
+	return
+END
+
+-------------------------------------
+-- Query Jefe
+-------------------------------------
+IF @Activar = 'CJefe'
+BEGIN
+	if IsNull(@id, 0) = 0 
+	begin
+		SELECT Empleado.Id, Empleado.Nombre, Apellido, Direccion, Telefono, Convert(int, Salario) as Salario, IdDepartamento, Rol, 
+			Convert(varchar, FechaIngreso, 23) as FechaIngreso, Sexo, CodigoCompania, 
+			Departamento.Nombre as NombreDepartamento, Rol.nombre as NombreRol
+		FROM Empleado
+			inner join Rol on Rol.Id = Empleado.Rol
+			inner join Departamento on Departamento.Id = Empleado.IdDepartamento
+			where  Rol = 1
+	end
+	else
+	begin
+	-- Esta linea de codigo no tiene ningun uso, pero se deja por si deseo usar mas adelante
+		SELECT Empleado.Id, Empleado.Nombre, Apellido, Direccion, Telefono, Convert(int, Salario) as Salario, IdDepartamento, Rol, 
+			Convert(varchar, FechaIngreso, 23) as FechaIngreso, Sexo, CodigoCompania, 
+			Departamento.Nombre as NombreDepartamento, Rol.nombre as NombreRol
+		FROM Empleado
+			inner join Rol on Rol.Id = Empleado.Rol
+			inner join Departamento on Departamento.Id = Empleado.IdDepartamento
+		where Empleado.Id = @id and Rol = 1
+	end
+
+	return
+END
+
+-------------------------------------
+-- Query Rol
+-------------------------------------
+IF @Activar = 'CRol'
+BEGIN
+	if IsNull(@id, 0) = 0 
+	begin
+		SELECT Id, nombre as Nombre
+		FROM Rol
+	end
+	else
+	begin
+		SELECT Id, nombre as Nombre
+		FROM Rol
+		where Rol.Id = @id
+	end
+
+	return
+END
+
+IF @Activar = 'ARol'
+BEGIN
+	UPDATE Rol 
+		SET Nombre=@nombre
+	WHERE Id=@id
+
+	select @id as Id
+	return
+	BEGIN
+	UPDATE Rol 
+		SET Nombre=@nombre
+	WHERE Id=@id
+
+	select @id as Id
+	return
+END
+END
+
+IF @Activar = 'IRol'
+BEGIN
+	INSERT INTO  Rol(Nombre)
+	VALUES (@nombre)
+
+	--retorna el id de la ultima insercion
+	select SCOPE_IDENTITY() as Id
+	return
+END
+
+IF @Activar = 'ERol'
+BEGIN
+	DELETE FROM Rol WHERE Id=@id
+	return
+END
+
 IF @Activar = 'CSexo'
 BEGIN
 	select 'Sexo*' as Nombre
@@ -105,5 +236,3 @@ BEGIN
 	return
 END
 GO
-
-
